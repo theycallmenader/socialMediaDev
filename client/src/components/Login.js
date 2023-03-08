@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 const Login = ({setIsLogin,left,setLeft,isLogin,right,setRight}) => {
 
   const [isClicked, setIsClicked] = useState(false);
-  const [isClicked2, setIsClicked2] = useState(false);
 
   console.log(isClicked,"isClicked")
 
@@ -12,29 +11,16 @@ const Login = ({setIsLogin,left,setLeft,isLogin,right,setRight}) => {
     const sw = document.querySelector(".switch");
 
     if (isClicked) {
-      sw.style.transform = "translateX(-600px)";
+      sw.style.transform = "translateX(-500px)";
     } else {
       sw.style.transform = "none";
     }
   }, [isClicked]);
 
-  useEffect(() => {
-    const fm = document.querySelector(".form");
-
-    if (isClicked2) {
-      fm.style.transform = "translateX(300px)";
-    } else {
-      fm.style.transform = "none";
-    }
-  }, [isClicked2]);
 
   function handleClick()  {
-    setIsClicked(!isClicked);
-
-  };
-  function handleClick2()  {
-    setIsClicked2(!isClicked2);
-
+   setIsClicked(!isClicked);
+setIsLogin(false)
   };
 
   return (
@@ -52,7 +38,7 @@ const Login = ({setIsLogin,left,setLeft,isLogin,right,setRight}) => {
       <div className="main">
       
         <div className="container b-container" id="b-container" >
-          <form className="form" id="b-form"  onClick={()=>{handleClick2()}} method action>
+          <form className="form" id="b-form" style={{right}}   method action>
             <h2 className="form_title title">Sign in to Website</h2>
             <div className="form__icons">
               <img
@@ -80,7 +66,7 @@ const Login = ({setIsLogin,left,setLeft,isLogin,right,setRight}) => {
             <button className="form__button button submit" >SIGN IN</button>
           </form>
         </div>
-        {isLogin ? setLeft('0') : setLeft('600px')}
+        {isLogin ? setLeft('0') : setLeft('500px')}
         {isLogin ? setRight('0') : setRight('400px')}
 
         <div className="switch" id="switch-cnt" style={{left}} >

@@ -13,7 +13,8 @@ console.log(right,"right")
 
   return (
     <>
-    {isLogin ? <Login setIsLogin={setIsLogin} left={left} setLeft={setLeft} right={right} setRight={setRight}/> : <Register setIsLogin={setIsLogin}  isLogin={isLogin}/> }
+      <Login setIsLogin={setIsLogin} left={left} setLeft={setLeft} right={right} setRight={setRight} />
+      <Register setIsLogin={setIsLogin} isLogin={isLogin} /> 
    
    
     </>

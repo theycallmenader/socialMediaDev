@@ -13,7 +13,7 @@ const Register = ({setIsLogin}) => {
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap"
         rel="stylesheet"
       />
-      <div className="main">
+      <div className="main-register">
 <div className="container a-container" id="a-container">
           <form className="form" id="a-form" method action>
             <h2 className="form_title title">Create Account</h2>
@@ -43,7 +43,7 @@ const Register = ({setIsLogin}) => {
             <button className="form__button button submit">SIGN UP</button>
           </form>
         </div>
-        <div className="switch"  id="switch-cnt" >
+        {/* <div className="switch"  id="switch-cnt" >
           <div className="switch__circle" />
           <div className="switch__circle switch__circle--t" />
           <div className="switch__container" id="switch-c1">
@@ -64,7 +64,8 @@ const Register = ({setIsLogin}) => {
               SIGN UP
             </button>
           </div>
-        </div></div>
+        </div> */}
+      </div>
     </div>
   )
 }
