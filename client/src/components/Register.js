@@ -1,4 +1,5 @@
 import React from 'react'
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 const Register = ({setIsLogin}) => {
   return (
@@ -33,8 +34,15 @@ const Register = ({setIsLogin}) => {
               />
             </div>
             <span className="form__span">or use email for registration</span>
-            <input className="form__input" type="text" placeholder="Name" />
+            //* First name field
+            <input className="form__input" type="text" placeholder="First Name" />
+            //* Last name field
+            <input className="form__input" type="text" placeholder="Last Name" />
+            //* Email field
             <input className="form__input" type="text" placeholder="Email" />
+            //*Birthdate field
+            <DatePicker/>
+           //* Password field
             <input
               className="form__input"
               type="password"

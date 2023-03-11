@@ -77,7 +77,6 @@ setIsLogin(false)
             <p className="switch__description description">
               To keep connected with us please login with your personal info
             </p>
-            asma3 khali hokak tw nkml beha mn ghir animat
             
             <button className="switch__button button switch-btn" onClick={()=>{handleClick()}}>
               SIGN IN
