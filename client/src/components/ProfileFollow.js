@@ -12,6 +12,8 @@ const ProfileFollow = () => {
             </div>
             <button className='profile-follow-button'>Follow</button>
         </div>
+
+        
     </div>
     </>
   )

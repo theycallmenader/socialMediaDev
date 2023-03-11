@@ -1,13 +1,14 @@
 .left-side{
     width:25%;
     height: max-content;
-    background-color: red;
+    /* background-color: red; */
     display: flex;
     align-items: center;
+    margin-top: 10px;
     justify-content: center;
 }
 .left-side-container{
-    background-color: green;
+    /* background-color: green; */
     width: 95%;
     height: 90%;
     
@@ -18,24 +19,23 @@
 .left-side .search-bar {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
 }
 .left-side-logo {
-    width: 50px;
-    height: 50px;
-    background-color: black;
+ 
+    /* background-color: black; */
 }
 .search-bar input {
     width: 230px;
     height: 35px;
     border-radius:10px;
     border: none;
-    background-color:  #FFFBEB;
+    /* background-color:  #FFFBEB; */
 }
 .left-side-content .search-icon{
 width: 30px;
 height: 30px;
-background-color: #FFE7CC;
+background-color: #ffe7cca5;
 color: #000;
 font-size: 20px;
 display: flex;
@@ -84,7 +84,7 @@ right: 58px;
     width: 305px;
     height: max-content;
     border-radius: 10px;
-    background-color: #fff;
+    /* background-color: #fff; */
     margin-top: 10px;
 }
 
@@ -101,11 +101,22 @@ gap: 10px;
 .profile-follow-button{
     width: 80px;
 height: 33px;
-margin-left: 68px;
+background: rgb(248,203,166);
+background: linear-gradient(360deg, rgba(248,203,166,1) 0%, rgba(248,203,166,0.8515055680475315) 48%, rgba(248,203,166,1) 100%);border: none;
+border-radius: 7px;
+
 }
 
 .follow-name-username {
     /* margin-left: 5px; */
-    background-color: red;
-    width: 700px;
+    /* background-color: red; */
+    width: 150px;
+}
+.follow-name-username h2 {
+    color: #000;
+}
+.profile-logo {
+    width: 60px;
+    height: 60px;
+    /* background-color: #fff; */
 }

@@ -18,6 +18,9 @@ body {
   background-color: #ecf0f3;
   color: #a0a5a8;
 }
+button{
+  cursor: pointer;
+}
 /**/
 .main {
   position: relative;

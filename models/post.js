@@ -2,30 +2,33 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 
 const postSchema = new schema({
-    postedBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
+    // postedBy: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'User',
+    //     // required: true
+    // },
+    user_id:{
+        type:String,
     },
     postLikes: {
         type: Number,
         default: 0,
-        required: true
+        // required: true
     },
     postDislikes: {
         type: Number,
         default: 0,
-        required: true
+        // required: true
     },
     postShare: {
         type: Number,
         default: 0,
-        required: true
+        // required: true
     },
     postComments: {
         type: Number,
         default: 0,
-        required: true
+        // required: true
     },
     postDate:{
         type: Date,
@@ -34,8 +37,8 @@ const postSchema = new schema({
     },
     postCategory: {
         type: String,
-        required: true
+        // required: true
     },
-    postContent: { },
+    postContent: {type:String },
 })
 module.exports = mongoose.model('Post', postSchema);

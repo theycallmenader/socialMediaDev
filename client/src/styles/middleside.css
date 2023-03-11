@@ -1,5 +1,118 @@
 .middle-side{
     width: 50%;
-    height: 200px;
-    background-color: blue;
+    height: max-content;
+    /* background-color: blue; */
+    margin-top: 20px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.middle-side-content {
+    width: 98%;
+    height: 95%;
+    /* background-color: red; */
+   position: relative;
+}
+.profile-image{
+    width: 200px;
+    background-color: #F8CBA6;
+    position: absolute;
+    border-radius: 50%;
+    left: 260px;
+    top: 210px;
+}
+.line-separator {
+    width: 90%;
+    height: 1px;
+    background-color: gray;
+    margin: 0px 30px ;
+    display: inline-block;
+    border: 1px solid gray;
+    border-radius: 2px;
+    opacity: 0.2;
+}
+.info-under-photo{
+    /* background-color: red; */
+    margin-top: 100px;
+    text-align: center;
+    padding: 10px 0;
+}
+.cover-profile-image {
+    width: 100%;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+.add-post{
+    margin-top: 20px;
+   
+}
+.add-post-img-zone{
+    display: flex;
+    gap: 20px;
+}
+.upload-zone {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: green;
+margin-left: 85px;
+}
+.add-post input {
+    width: 90%;
+    border: none;
+    border-radius:10px;
+    background-color: rgba(128, 128, 128, 0.208);
+    padding: 0 10px;
+    font-weight: 600;
+}
+.upload-zone .uil-image{
+    font-size: 40px;
+    color: green;
+}
+.upload-zone .uil-video{
+    font-size: 40px;
+    color: blue;
+}
+.upload-zone button{
+    width: 80px;
+    height: 33px;
+    background: rgb(248,203,166);
+    background: linear-gradient(360deg, rgba(248,203,166,1) 0%, rgba(248,203,166,0.8515055680475315) 48%, rgba(248,203,166,1) 100%);
+    border: none;
+    border-radius: 7px;
+    margin-left: 370px;
+}
+
+.post-details {
+    background-color: rgb(255, 255, 255);
+    margin-top: 40px;
+    border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.2), 0 6px 20px 0 rgba(255, 255, 255, 0.19);
+
+}
+.post-details p {
+    font-size: 15px;
+    padding: 10px 10px;
+}
+.post-details img{
+    width: 98%;
+    height: 500px;
+    padding: 20px 0;
+    display: flex;
+   margin-right: auto;
+   margin-left: auto;
+   border-radius: 40px;
+}
+.like-comment-share{
+    display: flex;
+    font-size: 30px;
+    color: black;
+    gap: 20px;
+    padding: 5px 10px;
+}
+.name-content{
+    color: black;
+    display: flex;
+    padding: 0 10px;
+    align-items: center;
 }
