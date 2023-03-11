@@ -1,0 +1,111 @@
+.left-side{
+    width:25%;
+    height: max-content;
+    background-color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.left-side-container{
+    background-color: green;
+    width: 95%;
+    height: 90%;
+    
+}
+.left-side-content{
+    position: relative;
+}
+.left-side .search-bar {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.left-side-logo {
+    width: 50px;
+    height: 50px;
+    background-color: black;
+}
+.search-bar input {
+    width: 230px;
+    height: 35px;
+    border-radius:10px;
+    border: none;
+    background-color:  #FFFBEB;
+}
+.left-side-content .search-icon{
+width: 30px;
+height: 30px;
+background-color: #FFE7CC;
+color: #000;
+font-size: 20px;
+display: flex;
+align-items: center;
+justify-content: center;
+position: absolute;
+right: 58px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.profile-info {
+    width: 305px;
+    height: 300px;
+    border-radius: 10px;
+    background-color: #fff;
+    margin-top: 10px;
+}
+.profile-info .info-update-icon{
+    display: flex;
+    /* background-color: red; */
+    padding: 20px;
+    color: #000;
+    border-radius: 10px;align-items: center;
+    justify-content: space-between;
+}
+.info-update-icon .uil-pen{
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.profile-info .info-update-icon-pers{
+    display: flex;
+    /* background-color: red; */
+    padding: 20px;
+    color: #000;
+    border-radius: 10px;align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+}
+.info-update-icon-pers h3{
+    font-weight: 400;
+}
+
+/* //profile-follow */
+.profile-follow{
+    width: 305px;
+    height: max-content;
+    border-radius: 10px;
+    background-color: #fff;
+    margin-top: 10px;
+}
+
+.follow-list {
+    display: flex;
+align-items: center;
+gap: 10px;
+}
+.follow-list img{
+    width: 50px;
+    height: 50px;
+    gap: 20px;
+}
+.profile-follow-button{
+    width: 80px;
+height: 33px;
+margin-left: 68px;
+}
+
+.follow-name-username {
+    /* margin-left: 5px; */
+    background-color: red;
+    width: 700px;
+}

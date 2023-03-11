@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { userLogin } from "../JS/userSlice/userSlice";
 
 
 const Login = ({setIsLogin,left,setLeft,isLogin,right,setRight}) => {
@@ -22,7 +25,12 @@ const Login = ({setIsLogin,left,setLeft,isLogin,right,setRight}) => {
    setIsClicked(!isClicked);
 setIsLogin(false)
   };
-
+  const [loginn, setLoginn] = useState({
+    email: "",
+    password: "",
+  });
+  const navigate= useNavigate();
+  const dispatch=useDispatch();
   return (
     <div>
       <meta
@@ -38,7 +46,7 @@ setIsLogin(false)
       <div className="main">
       
         <div className="container b-container" id="b-container" >
-          <form className="form" id="b-form" style={{right}}   method action>
+          <form className="form" id="b-form" style={{right}}       onSubmit={(e) => e.preventDefault()}>
             <h2 className="form_title title">Sign in to Website</h2>
             <div className="form__icons">
               <img
@@ -56,14 +64,24 @@ setIsLogin(false)
               />
             </div>
             <span className="form__span">or use your email account</span>
-            <input className="form__input" type="text" placeholder="Email" />
+            <input className="form__input" type="text" placeholder="Email" 
+          onChange={(e) => setLoginn({ ...loginn, email: e.target.value })}
+          />
             <input
               className="form__input"
               type="password"
               placeholder="Password"
+          onChange={(e) => setLoginn({ ...loginn, password: e.target.value })}
+
             />
             <a className="form__link">Forgot your password?</a>
-            <button className="form__button button submit" >SIGN IN</button>
+            <button className="form__button button submit"
+            onClick={() => {
+              dispatch(userLogin(loginn));
+              setTimeout(() => {
+                navigate("/profile");
+              }, 1500);}}
+            >Login</button>
           </form>
         </div>
         {isLogin ? setLeft('0') : setLeft('500px')}

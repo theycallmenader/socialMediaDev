@@ -10,7 +10,7 @@ const LoginRegister = () => {
     const [right, setRight] = useState("0");
 console.log(right,"right")
     console.log(left,"left")
-
+  
   return (
     <>
       <Login setIsLogin={setIsLogin} left={left} setLeft={setLeft} right={right} setRight={setRight} />
