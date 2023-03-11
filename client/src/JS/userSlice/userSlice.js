@@ -1,44 +1,204 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
-export const userRegister=createAsyncThunk("user/register",async ()=>{
+//register
+export const userRegister = createAsyncThunk("user/register", async (user) => {
   try {
-    let response = await axios.post("http://localhost:6000/user/register",
-    user
-    );
-    return await response;
+    let result = await axios.post("http://localhost:5000/user/register", user);
+    // console.log(result.data)
+    return result.data;
   } catch (error) {
-    console.log(err)
+    console.log(error);
   }
+});
 
+//login
+export const userLogin = createAsyncThunk("user/login", async (user) => {
+  try {
+    let result = await axios.post("http://localhost:5000/user/login", user);
+    // console.log(result.data)
+    return result.data;
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+//current user
+export const userCurrent = createAsyncThunk("user/current", async () => {
+  try {
+    let result = await axios.get("http://localhost:5000/user/current", {
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
+    });
+    // console.log(result.data)
+    return result.data;
+  } catch (error) {
+    console.log(error);
+  }
+});
+console.log("result");
+
+//update user
+export const updateUser = createAsyncThunk(
+  "user/update",
+  async ({ id, user }) => {
+    try {
+      // console.log(user);
+      let result = axios.put(`http://localhost:5000/user/update/${id}`, user);
+      return result.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+//upload image
+
+//get all users
+
+export const getUser = createAsyncThunk("user/getall", async () => {
+  try {
+    let result = await axios.get(`http://localhost:5000/user/all`);
+    console.log(result.data.users);
+    return result.data.users;
+    // console.log(result.data.data.users)
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// add user
+
+export const createUser = createAsyncThunk("user/add", async (user) => {
+  try {
+    let result = await axios.post("http://localhost:5000/user/add", user);
+    console.log(result.data);
+    return result.data;
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+//delet user
+export const deleteUser = createAsyncThunk("user/delete", async ({ id }) => {
+  try {
+    let result = await axios.delete(`http://localhost:5000/user/delete/${id}`);
+    return result.data;
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 const initialState = {
-  user:null,
-  status:null,
+  user: null,
+  status: null,
 };
-
 export const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {
+    logout: (state, action) => {
+      state.user = null;
+      localStorage.removeItem("token");
+    },
   },
   extraReducers: {
+    //register extra reducers
     [userRegister.pending]: (state) => {
-      state.status = 'loading';
+      state.status = "loading";
+    },
+    [userRegister.fulfilled]: (state, action) => {
+      state.status = "success";
+      //console.log("=========",action.payload);
+      state.user = action.payload.user;
+      localStorage.setItem("token", action.payload.token);
+      return state;
+    },
+    [userRegister.rejected]: (state) => {
+      state.status = "fail";
+    },
+
+    // login extra reducers
+    [userLogin.pending]: (state) => {
+      state.status = "loading";
+    },
+    [userLogin.fulfilled]: (state, action) => {
+      state.status = "success";
+      console.log("=========", action.payload);
+      state.user = action.payload.user;
+      localStorage.setItem("token", action.payload.token);
+      return state;
+    },
+    [userLogin.rejected]: (state) => {
+      state.status = "fail";
+    },
+    //current user
+    [userCurrent.pending]: (state) => {
+      state.status = "loading";
+    },
+    [userCurrent.fulfilled]: (state, action) => {
+      state.status = "success";
+      //console.log("=========",action.payload);
+      state.user = action.payload?.user;
+      return state;
+    },
+    [userCurrent.rejected]: (state) => {
+      state.status = "fail";
+    },
+
+    ///////////update user///////////
+    [updateUser.pending]: (state) => {
+      state.status = "pending";
+    },
+    [updateUser.fulfilled]: (state) => {
+      state.status = "fullfilled";
+    },
+    [updateUser.rejected]: (state) => {
+      state.status = "rejected";
+    },
+    /////////////get all user////////////////////////
+    [getUser.pending]: (state) => {
+      state.status = "loading";
+    },
+    [getUser.fulfilled]: (state, action) => {
+      state.status = "fulfilled";
+      // state.msg = action.payload.data.msg;
+      state.users = action.payload;
+    },
+    [getUser.rejected]: (state) => {
+      state.status = "failed";
+    },
+
+    //add user extra reducers
+    [createUser.pending]: (state) => {
+      state.status = "loading...";
+    },
+    [createUser.fulfilled]: (state, action) => {
+      state.status = "success";
+      //console.log("=========",action.payload);
+      state.user = [action.payload.user, ...state.users];
+      return state;
+    },
+    [createUser.rejected]: (state) => {
+      state.status = "fail";
+    },
+
+    /////////////delet feedback//////////////
+    [deleteUser.pending]: (state) => {
+      state.status = "pending";
+    },
+    [deleteUser.fulfilled]: (state, action) => {
+      state.status = "fullfilled";
+      console.log(action.payload);
+    },
+    [deleteUser.rejected]: (state) => {
+      state.status = "rejected";
+    },
   },
-  [userRegister.fulfilled]: (state, action) => {
-    state.status ='success';
-    state.user = action.payload.data.user;
-    localStorage.setItem('token', action.payload.data.token);
-  },
-  [userRegister.rejected]: (state) => {
-    state.status = 'failed';
-  },
-}
-})
-}
+});
 
 // Action creators are generated for each case reducer function
-// export const { increment, decrement, incrementByAmount } = userSlice.actions
+export const { logout } = userSlice.actions;
 
-export default userSlice.reducer
+export default userSlice.reducer;

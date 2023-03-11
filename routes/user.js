@@ -1,106 +1,160 @@
-const express=require("express");
-
+const express = require("express");
+const bcrypt = require("bcrypt");
+const User = require("../models/user");
 const userRouter = express.Router();
-const bcrypt =require("bcrypt");
-const User =require("../models/user");
-const jwt =require("jsonwebtoken");
-const {loginRules,registerRules,validation} = require("../middleware/validator");
+const jwt = require("jsonwebtoken");
+const {
+  loginRules,
+  registerRules,
+  Validation,
+} = require("../middleware/validator");
 const isAuth = require("../middleware/passport");
+// router.get("/", (req, res) => {
+//     res.send("hello")
+// })
 
-//* register
-
-userRouter.post('/register',registerRules(),validation, async(req,res)=>{
-    const {userName,email,password,firstName,lastName,birthDate}=req.body;
-    try{
-        const newUser=new User({userName,email,password,firstName,lastName,birthDate});
-
-        //TODO check if user already exists
-
-        const searchedUser=await User.findOne({email});
-        if (searchedUser){
-            return res.status(400).send({msg:"email already exists"});
-        }
-        //TODO hash password
-        const salt=10;
-        const genSalt=await bcrypt.genSalt(salt);
-        const hashedPassword=await bcrypt.hash(password,genSalt);
-        newUser.password = hashedPassword;
-
-        //TODO save the new user
-        const newUserToken =await newUser.save();
-        //TODO generate a token
-
-        const payload={
-            _id:newUserToken.id,
-        };
-        const token = await jwt.sign(payload, process.env.JWT_SECRET, {
-            expiresIn:1000 * 60 * 60 * 24,
-        });
-        res.status(200).send({msg:"Registred Successfully",token: `Bearer ${token}`});
+///register
+userRouter.post("/register", registerRules(), Validation, async (req, res) => {
+  const { userName,firstname, lastname, email, password } = req.body;
+  try {
+    const newUser = new User(req.body);
+    //check if email exist
+    const searchedUser = await User.findOne({ email });
+    if (searchedUser) {
+      return res.status(400).send({ msg: "email already exist" });
     }
-    catch(err){
-        res.status(500).send("cant register");
+
+    //hash password
+    const salt = 10;
+    const genSalt = await bcrypt.genSalt(salt);
+    const hashedPassword = await bcrypt.hash(password, genSalt);
+    // newUser.password = hashedPassword;
+    // console.log(hashedPassword);
+    newUser.password = hashedPassword;
+
+    //save user
+    const result = await newUser.save();
+    //generate a token
+    const payload = {
+      _id: result._id,
+      name: result.name,
+    };
+    require("dotenv").config();
+    const token = await jwt.sign(payload, process.env.SecretOrKey, {
+      expiresIn: 1000 * 60 * 60 * 24,
+    });
+    //**********
+    res.send({
+      user: result,
+      msg: "user is saved",
+      token: `Bearer ${token}`,
+    });
+  } catch (error) {
+    res.send("can not save the user");
+    console.log(error);
+  }
+});
+//login
+userRouter.post("/login", loginRules(), Validation, async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    //fin of the user exist
+    const searchedUser = await User.findOne({ email });
+    //if the email not exist
+    if (!searchedUser) {
+      return res.status(400).send({ msg: "bad credential" });
     }
-})
+    //password are
+    const match = await bcrypt.compare(password, searchedUser.password);
 
-//* login
-
-userRouter.post("/login",loginRules(),validation,async(req, res) => {
-    const { email, password } = req.body;
-    try {
-        //TODO find user existance in database
-
-        const searchedUser = await User.findOne({ email });
-        if (!searchedUser) {
-            return res.status(400).send({ msg: "bad credential" });
-        }
-        const isMatch =  await bcrypt.compare(password, searchedUser.password);
-        //TODO check if password is correct
-
-        if (!isMatch) {
-            return res.status(400).send({ msg: "bad credential" });
-        }
-        const payload={
-            _id:searchedUser.id,
-        };
-        const token = await jwt.sign(payload, process.env.JWT_SECRET, {
-            expiresIn:1000 * 60 * 60 * 24,
-        });
-        res.status(200).send({ msg: "Login Successful",token });
-    } catch (error) {
-        res.status(500).send({ msg: "cant login" });
+    if (!match) {
+      return res.status(400).send({ msg: "bad credential" });
     }
-})
-//* Update the user profile
+    //cree un token
+    const payload = {
+      _id: searchedUser.id,
+      nam: searchedUser.name,
+    };
+    const token = await jwt.sign(payload, process.env.SecretOrKey, {
+      expiresIn: 1000 * 3600 * 24,
+    });
+    console.log(token);
+    //send the user
+    res
+      .status(200)
+      .send({ user: searchedUser, msg: "success", token: `Bearer ${token}` });
+  } catch (error) {
+    res.send({ msg: "can not get th user" });
+  }
+});
+//****************************user crud ******************/
+
+//add new user
+userRouter.post("/add", async (req, res) => {
+  try {
+    let newUser = new User(req.body);
+    const result = await newUser.save();
+    res.send({ result: result, msg: "user added" });
+  } catch (error) {
+    console.log(error);
+  }
+});
+//get all users
+userRouter.get("/all", async (req, res) => {
+  try {
+    let result = await User.find();
+    res.send({
+      users: result,
+      msg: "all users",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+//get user by id
+userRouter.get("/find/:id", async (req, res) => {
+  try {
+    let result = await User.findById(req.params.id);
+    res.send({
+      users: result,
+      msg: "this is the user back by id",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+//update user by id
+
 userRouter.put("/update/:id", async (req, res) => {
-    try {
-      let result = await User.findByIdAndUpdate(
-        { _id: req.params.id },
-        { $set: { ...req.body } },
-        { new: true }
-      );
-      res.send({ newUser: result, msg: "Sucess" });
-    } catch (error) {
-      console.log(error);
-    }
-  });
+  try {
+    let result = await User.findByIdAndUpdate(
+      { _id: req.params.id },
+      { $set: { ...req.body } },
+      { new: true }
+    );
+    res.send({ newUser: result, msg: "user updated" });
+  } catch (error) {
+    console.log(error);
+  }
+});
 
-//* delete user
-
+//delete user
 userRouter.delete("/delete/:id", async (req, res) => {
-    try {
-      let user = await User.findByIdAndDelete(req.params.id);
-      res.send({ msg: "user is deleted" });
-    } catch (error) {
-      console.log(error);
-    }
-  });
+  try {
+    let result = await User.findByIdAndDelete(req.params.id);
+    res.send({ msg: "user is delete" });
+  } catch (error) {
+    console.log(error);
+  }
+});
 
-//* Get user
+//****************************end user crud ******************/
+
+//get current user
 userRouter.get("/current", isAuth(), (req, res) => {
-    res.status(200).send({ user: req.user });
-  });
+  res.status(200).send({ user: req.user });
+});
 
-
-
-module.exports = userRouter
+module.exports = userRouter;

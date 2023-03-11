@@ -1,38 +1,39 @@
-const {check,validationResult} = require('express-validator');
+const { check, validationResult } = require("express-validator");
 
-//* register rules
+//register rules
+exports.registerRules = () => [
+  check("userName", "userName is required").notEmpty(),
 
-exports.registerRules=()=>
-    [
-    check("firstName","Name must be specified").notEmpty(),
-    check("lastName","Name must be specified").notEmpty(),
-    check("userName","userName is required").notEmpty(),
-    check("birthDate","birthdate must be specified").notEmpty(),
-    check("password","password is required").isLength({min:8,max:20}),
-    check("email","email is required").notEmpty(),
-    check("email","check your email again").isEmail(),
-    ]
+  check("firstname", "firstname is required").notEmpty(),
+  check("lastname", "lastname is required").notEmpty(),
+  check("email", "email is required").notEmpty(),
+  check("email", "check email again").isEmail(),
+  // check("role", "role is required").notEmpty(),
+  check("password", "password is required").isLength({
+    min: 6,
+    max: 20,
+  }),
+];
 
+//login rules
+exports.loginRules = () => [
+  check("email", "email is required").notEmpty(),
+  check("email", "check email again").isEmail(),
+  check("password", "password must be more than 6").isLength({
+    min: 6,
+    max: 20,
+  }),
+];
 
-//* Login rules
-
-exports.loginRules=()=>
-    [
-    check("password","password must be between 8-20 character").isLength({min:8,max:20}),
-    check("email","email is required").notEmpty(),
-    check("email","check your email again").isEmail(),
-    ]
-    
-//* Exports the error message
-
-exports.validation=(req,res,next)=>{
-    const errors=validationResult(req);
-    if(!errors.isEmpty()){
-        return res.status(400).send({
-            errors:errors.array().map((el)=>({
-                msg:el.msg,
-            }))
-        });
-    }
-    next();
-}
+exports.Validation = (req, res, next) => {
+  const errors = validationResult(req);
+  console.log(errors);
+  if (!errors.isEmpty()) {
+    return res.status(400).send({
+      errors: errors.array().map((el) => ({
+        msg: el.msg,
+      })),
+    });
+  }
+  next();
+};

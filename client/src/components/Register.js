@@ -1,7 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { userRegister } from '../JS/userSlice/userSlice';
+import { useDispatch } from "react-redux";
+import { useNavigate } from 'react-router-dom';
 
-const Register = ({setIsLogin}) => {
+const Register = ({ setIsLogin }) => {
+  const [register, setRegister] = useState({
+    userName: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
+  const dispatch = useDispatch();
+    const navigate = useNavigate();
+
   return (
     <div>
       <meta
@@ -15,8 +28,12 @@ const Register = ({setIsLogin}) => {
         rel="stylesheet"
       />
       <div className="main-register">
-<div className="container a-container" id="a-container">
-          <form className="form" id="a-form" method action>
+        <div className="container a-container" id="a-container">
+          <form
+            className="form"
+            id="a-form"
+            onSubmit={(e) => e.preventDefault()}
+          >
             <h2 className="form_title title">Create Account</h2>
             <div className="form__icons">
               <img
@@ -34,21 +51,73 @@ const Register = ({setIsLogin}) => {
               />
             </div>
             <span className="form__span">or use email for registration</span>
-            //* First name field
-            <input className="form__input" type="text" placeholder="First Name" />
-            //* Last name field
-            <input className="form__input" type="text" placeholder="Last Name" />
-            //* Email field
-            <input className="form__input" type="text" placeholder="Email" />
-            //*Birthdate field
-            <DatePicker/>
-           //* Password field
+            <input
+              className="form__input"
+              type="text"
+              placeholder="UserName"
+              onChange={(e) =>
+                setRegister({ ...register, userName: e.target.value })
+              }
+            />
+            {/* //* userName field */}
+
+            <input
+              className="form__input"
+              type="text"
+              placeholder="Username"
+              onChange={(e) =>
+                setRegister({ ...register, userName: e.target.value })
+              }
+            />
+            {/* //* First name field */}
+            <input
+              className="form__input"
+              type="text"
+              placeholder="First Name"
+              onChange={(e) =>
+                setRegister({ ...register, firstname: e.target.value })
+              }
+            />
+            {/* //* Last name field */}
+            <input
+              className="form__input"
+              type="text"
+              placeholder="Last Name"
+              onChange={(e) =>
+                setRegister({ ...register, lastname: e.target.value })
+              }
+            />
+            {/* //* Email field */}
+            <input
+              className="form__input"
+              type="text"
+              placeholder="Email"
+              onChange={(e) =>
+                setRegister({ ...register, email: e.target.value })
+              }
+            />
+            {/* //*Birthdate field */}
+            {/* <DatePicker/> */}
+            {/* //* Password field */}
             <input
               className="form__input"
               type="password"
               placeholder="Password"
+              onChange={(e) =>
+                setRegister({ ...register, password: e.target.value })
+              }
             />
-            <button className="form__button button submit">SIGN UP</button>
+            <button
+              className="form__button button submit"
+              onClick={() => {
+                dispatch(userRegister(register));
+                setTimeout(() => {
+                  navigate("/profile");
+                }, 1500);
+              }}
+            >
+              Register
+            </button>
           </form>
         </div>
         {/* <div className="switch"  id="switch-cnt" >
@@ -75,7 +144,7 @@ const Register = ({setIsLogin}) => {
         </div> */}
       </div>
     </div>
-  )
+  );
 }
 
 export default Register

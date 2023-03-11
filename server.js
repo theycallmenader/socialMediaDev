@@ -1,24 +1,23 @@
-const express = require('express');
-const connectdb =require('./config/connectdb');
-const cors = require('cors');
+const express = require("express");
+//import cors
+const cors = require("cors");
 const app = express();
+const connectdb = require("./config/connectdb");
 
+require("dotenv").config();
+//*connect db
 
-require('dotenv').config()
-
+connectdb();
 //* JSON MIDDELEWARE
 
 app.use(express.json());
 app.use(cors());
 
 //*routes
-app.use("/user",require("./routes/user"))
-app.use("/post",require("./routes/post"))
+app.use("/user", require("./routes/user"));
+app.use("/post", require("./routes/post"));
 
-//*connect db
-
-connectdb();
-port=process.env.PORT
-app.listen(port,(err)=>{
-    err?console.log(err):console.log('server is running')
+port = process.env.PORT;
+app.listen(port, (err) => {
+  err ? console.log(err) : console.log("server is running");
 });
