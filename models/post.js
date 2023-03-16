@@ -1,44 +1,48 @@
+const { text } = require('express');
 const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 
 const postSchema = new schema({
-    // postedBy: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'User',
-    //     // required: true
-    // },
-    user_id:{
+    user_id: {
+        type:String
+    },
+    avatar: {
         type:String,
+        default:"data:image/jpeg;base64,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"
     },
+    firstname:{
+        type:String
+    },
+    lastname:{
+        type:String
+    },
+    Date:{
+        type:Date,
+        default:Date.Now
+    },  
     postLikes: {
-        type: Number,
-        default: 0,
-        // required: true
+        type:Number,
+        default:0
+    }, 
+    isLiked:{
+        type:Boolean,
+        default:false
     },
-    postDislikes: {
-        type: Number,
-        default: 0,
-        // required: true
+    postComments:{
+        type:Number,
+        default:0
     },
     postShare: {
         type: Number,
         default: 0,
         // required: true
     },
-    postComments: {
-        type: Number,
-        default: 0,
-        // required: true
-    },
-    postDate:{
-        type: Date,
-        default: Date.now,
-        required: true
-    },
     postCategory: {
         type: String,
         // required: true
     },
-    postContent: {type:String },
+    postContent: {
+
+    },
 })
 module.exports = mongoose.model('Post', postSchema);

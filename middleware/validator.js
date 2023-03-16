@@ -1,6 +1,6 @@
 const { check, validationResult } = require("express-validator");
 
-//register rules
+//*register rules
 exports.registerRules = () => [
   check("userName", "userName is required").notEmpty(),
 
@@ -15,7 +15,7 @@ exports.registerRules = () => [
   }),
 ];
 
-//login rules
+//*login rules
 exports.loginRules = () => [
   check("email", "email is required").notEmpty(),
   check("email", "check email again").isEmail(),
@@ -24,7 +24,12 @@ exports.loginRules = () => [
     max: 20,
   }),
 ];
-
+//* Post rules
+exports.postRules=()=>[
+  check('text','Post can not be empty!')
+  .not()
+  .isEmpty()
+];
 exports.Validation = (req, res, next) => {
   const errors = validationResult(req);
   console.log(errors);

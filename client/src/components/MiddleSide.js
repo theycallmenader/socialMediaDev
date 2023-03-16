@@ -1,7 +1,10 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
 import "../styles/middleside.css"
 import AddPost from './AddPost'
 const MiddleSide = () => {
+  const user = useSelector((state) => state?.user?.user);
+
   return (
     <>
     <div className="middle-side">
@@ -9,7 +12,7 @@ const MiddleSide = () => {
         <img src="assets/cover.jpg" alt=""  className='cover-profile-image'/> <br />
         <img src="assets/nader2.png" alt=""  className='profile-image'/>
        <div className='info-under-photo'>
-        <h2 style={{color:"black"}}>Nader Sdiri</h2>
+        <h2 style={{color:"black"}}>{user?.firstname} {user?.lastname}</h2>
         <p>Full Stack Developer</p>
         <div className="line-separator"></div>
         </div>

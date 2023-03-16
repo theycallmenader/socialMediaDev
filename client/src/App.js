@@ -8,8 +8,11 @@ import Userprofile from './pages/Userprofile';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { getUser, userCurrent } from './JS/userSlice/userSlice';
+import { getPost } from './JS/postSlice/postSlice';
 function App() {
   const user = useSelector((state) => state?.user?.user);
+  const post = useSelector((state) => state?.post?.post);
+console.log(post,"hhhhh")
   const isAuth = localStorage.getItem("token");
   const [ping, setPing] = useState(false);
   const dispatch = useDispatch();
@@ -18,8 +21,10 @@ function App() {
       if (isAuth) {
   dispatch(userCurrent());
   dispatch(getUser());
+
       }
       
+  dispatch(getPost());
     
     }, [dispatch, isAuth, ping]);
 

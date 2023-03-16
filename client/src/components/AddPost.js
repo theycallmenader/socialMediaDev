@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { createAddPost } from '../JS/addPostSlice/postSlice';
+import { createPost } from '../JS/postSlice/postSlice';
 import PostDetails from './PostDetails'
 
 const AddPost = ({}) => {
   const [postContent, setPostContent] = useState("");
   const user = useSelector((state) => state?.user?.user);
 const dispatch= useDispatch()
+const post = useSelector((state) => state?.post?.post);
+
   return (
     <>
     <div className="add-post">
@@ -23,21 +25,24 @@ const dispatch= useDispatch()
         <span>photo</span>
         <i className="uil uil-video"></i>
         <span style={{color:"blue"}}>Video</span>
+   
+        
         <button
            onClick={() => {
             dispatch(
-              createAddPost({
+              createPost({
                 postContent:postContent,
                 firstname: user?.firstname,
                 lastname: user?.lastname,
-                // date: new Date(),
                 user_id: user?._id,
               })
             );}}
              >Share</button>
         </div>
-        <PostDetails/>
-        <PostDetails/>
+      {post?.filter(el=>el?.user_id == user?._id).map((el)=> <>
+        <PostDetails el={el}/>
+        </>)
+      }
 
     </div>
     </>

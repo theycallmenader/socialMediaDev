@@ -16,6 +16,9 @@ app.use(cors());
 //*routes
 app.use("/user", require("./routes/user"));
 app.use("/post", require("./routes/post"));
+app.use("/commentaire", require("./routes/commentaire"));
+app.use("/repondrecommentaire", require("./routes/repondreCommentaire"));
+
 
 port = process.env.PORT;
 app.listen(port, (err) => {

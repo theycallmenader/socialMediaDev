@@ -94,7 +94,7 @@ margin-left: 85px;
     font-size: 15px;
     padding: 10px 10px;
 }
-.post-details img{
+.post-details .postImage{
     width: 98%;
     height: 500px;
     padding: 20px 0;
@@ -106,9 +106,13 @@ margin-left: 85px;
 .like-comment-share{
     display: flex;
     font-size: 30px;
+    font-weight: 300 ; 
     color: black;
+    align-items: center;
+    justify-content: start;
     gap: 20px;
     padding: 5px 10px;
+    background-color:beige;
 }
 .name-content{
     color: black;
