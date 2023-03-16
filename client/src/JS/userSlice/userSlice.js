@@ -133,7 +133,7 @@ export const userSlice = createSlice({
     [userLogin.rejected]: (state) => {
       state.status = "fail";
     },
-    //current user
+    //*current user */
     [userCurrent.pending]: (state) => {
       state.status = "loading";
     },
