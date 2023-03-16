@@ -27,6 +27,20 @@ try {
 }
 
 });
+//* GET POST BY ID USER *//
+postRouter.get("/userPosts/:id", async (req, res) => {
+  
+  try {
+    let result = await post.findById(req.params.id);
+    res.send({
+      posts: result,
+      msg: "this is the user posts",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 //* Get All POSTS*/
 
 postRouter.get("/getPosts", async (req, res) => {

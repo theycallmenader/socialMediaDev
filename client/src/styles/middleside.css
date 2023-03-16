@@ -112,7 +112,7 @@ margin-left: 85px;
     justify-content: start;
     gap: 20px;
     padding: 5px 10px;
-    background-color:beige;
+    background-color:rgba(203, 203, 203, 0.564);
 }
 .name-content{
     color: black;

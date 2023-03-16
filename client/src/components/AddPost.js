@@ -2,12 +2,14 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { createPost } from '../JS/postSlice/postSlice';
 import PostDetails from './PostDetails'
+import { useLocation, useNavigate } from "react-router";
 
-const AddPost = ({}) => {
+const AddPost = ({ping,setPing}) => {
   const [postContent, setPostContent] = useState("");
   const user = useSelector((state) => state?.user?.user);
 const dispatch= useDispatch()
 const post = useSelector((state) => state?.post?.post);
+const location = useLocation();
 
   return (
     <>
@@ -36,14 +38,25 @@ const post = useSelector((state) => state?.post?.post);
                 lastname: user?.lastname,
                 user_id: user?._id,
               })
-            );}}
+            )
+            setPing(!ping);}}
              >Share</button>
         </div>
-      {post?.filter(el=>el?.user_id == user?._id).map((el)=> <>
+      {location.pathname.includes("/homepage") ? <>
+      {post?.map((el)=> <>
         <PostDetails el={el}/>
-        </>)
+        </>).reverse()
       }
 
+      </> : <>
+      {post?.filter(el=>el?.user_id == user?._id).map((el)=> <>
+        <PostDetails ping={ping} setPing={setPing} el={el}/>
+        </>).reverse()
+      }
+
+      </>  }
+
+    
     </div>
     </>
   )

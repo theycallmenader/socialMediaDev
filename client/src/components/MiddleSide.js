@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux';
 import "../styles/middleside.css"
 import AddPost from './AddPost'
-const MiddleSide = () => {
+const MiddleSide = ({ping,setPing}) => {
   const user = useSelector((state) => state?.user?.user);
 
   return (
@@ -21,7 +21,7 @@ const MiddleSide = () => {
       <h4>6 followers</h4>
        </div>
        <div className="line-separator"></div>
-       <AddPost/>
+       <AddPost ping={ping} setPing={setPing}/>
       </div>
     </div>
     </>

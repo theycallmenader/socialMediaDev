@@ -43,7 +43,7 @@ console.log(post,"hhhhh")
         <Route exact path="/loginregister" element={<LoginRegister/>} />
         <Route element={<PrivateRoute/>}>
           <Route exact path="/homepage" element={<Homepage/>}></Route>
-          <Route exact path="/profile" element={<Userprofile/>}></Route>
+          <Route exact path="/profile" element={<Userprofile ping={ping} setPing={setPing}/>}></Route>
         </Route>{" "}
       </Routes>
     </div>

@@ -5,10 +5,11 @@ import '../styles/postDetails.css'
 import InputEmoji from "react-input-emoji";
 import { createCommentaire } from '../JS/commentaireSlice/commentaireSlice';
 import AddCommentaire from './AddCommentaire';
-import { updatePost } from '../JS/postSlice/postSlice';
+import { deletePost, updatePost } from '../JS/postSlice/postSlice';
+import { useLocation} from "react-router";
 
 
-const PostDetails = ({el}) => {
+const PostDetails = ({el,ping,setPing}) => {
   function handleOnEnter(commentaireContent) {
     console.log("enter", commentaireContent);
   }
@@ -36,6 +37,7 @@ const PostDetails = ({el}) => {
       return;
     }
   };
+  const location=useLocation()
   const dispatch= useDispatch()
   const user = useSelector((state) => state?.user?.user);
 const post = useSelector((state) => state.post?.post);
@@ -44,7 +46,11 @@ console.log(post,'pooost')
   return (
     <>
       <div className="post-details">
+      <p>{el?.postContent}</p>
         <img src="assets/posttest.jpg" alt="" className="postImage" />
+
+        <p>2000 like</p>
+        
         <div className="like-comment-share">
           {!redHeart ? (
             <>
@@ -66,11 +72,23 @@ console.log(post,'pooost')
             </>
           )}
           <i class="uil uil-comment-alt-dots"></i>
-          <i class="uil uil-share" style={{ marginLeft: "25px" }}></i>
-        </div>
-        <p>2000 like</p>
-        <p>{el?.postContent}</p>
+      
 
+          <i class="uil uil-share" style={{ marginLeft: "25px" }}></i>
+          {location.pathname.includes("/profile") &&  <>
+          <i       onClick={() => {
+                          dispatch(
+                            deletePost({
+                              id: el._id,
+                              deletePost,
+                              // posts: post.filter((el) => el == user._id),
+                            })
+                          );
+                          setPing(!ping)
+                        }} class="uil uil-trash-alt" style={{ marginLeft: "25px",cursor:"pointer" }}></i>
+          </>}
+       
+        </div>
         <div className="name-content">
           <h3>
             {el?.firstname} {el?.lastname}
@@ -106,10 +124,8 @@ console.log(post,'pooost')
                     //     firstname: user?.firstname,
                     //     lastname: user?.lastname,
                     //     user_img: user?.image,
-
                     //     // repondre_id:
                     //   }),
-
                     // )
                     dispatch(
                       updatePost({
@@ -117,6 +133,7 @@ console.log(post,'pooost')
                         id: el._id,
                         avatar: "gg",
                         post: {
+                          ...el?.commentList.postComments,
                           commentList: {
                             firstname: user.firstname,
                             lastname: user.lastname,

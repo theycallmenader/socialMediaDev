@@ -2,7 +2,10 @@ import React from 'react'
 import "../styles/leftside.css";
 import PersonelInfo from './PersonelInfo';
 import ProfileFollow from './ProfileFollow';
+import { useNavigate } from "react-router";
+
 const LeftSide = () => {
+  const navigate=useNavigate()
   return (
     <>
     <div className="left-side">
@@ -10,7 +13,7 @@ const LeftSide = () => {
             <div className="left-side-content">
                 <div className="search-bar">
                     {/* <div className="left-side-logo"> */}
-                      <img src="assets/logo.png" className='profile-logo' alt="" />
+                      <img onClick={()=>navigate('/homepage')} src="assets/logo.png" className='profile-logo' alt="" />
                     {/* </div> */}
                     <input type="text" />
                     <i className="uil uil-search search-icon"></i>      

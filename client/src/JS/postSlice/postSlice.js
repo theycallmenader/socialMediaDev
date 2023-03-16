@@ -14,7 +14,7 @@ export const getPost = createAsyncThunk("post/get", async () => {
 //add post
 //update post
 export const updatePost = createAsyncThunk(
-  "poduct/update/",
+  "post/update/",
   async ({ post, id }) => {
     try {
       let result = await axios.put(
@@ -40,7 +40,15 @@ export const createPost=createAsyncThunk(
 
 )
 
-
+//delet post
+export const deletePost = createAsyncThunk("post/delete", async ({id}) => {
+  try {
+    let result =await axios.delete(`http://localhost:5000/post/deletePost/${id}`);
+    return result.data;
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 const initialState = {
   post: null,
@@ -69,7 +77,7 @@ export const postSlice = createSlice({
     },
     [createPost.fulfilled]: (state, action) => {
       state.status = "fullfieled";
-      state.post = [action.payload.post];
+      state.post = [...state.post,action.payload.post];
     return state
     },
     [createPost.rejected]: (state) => {
@@ -86,6 +94,16 @@ export const postSlice = createSlice({
     },
     [updatePost.rejected]: (state) => {
       state.status = "failed";
+    },
+    [deletePost.pending]: (state) => {
+      state.status = "pending";
+    },
+    [deletePost.fulfilled]: (state, action) => {
+      state.status = "fullfilled";
+      console.log(action.payload);
+    },
+    [deletePost.rejected]: (state) => {
+      state.status = "rejected";
     },
   },
 });
