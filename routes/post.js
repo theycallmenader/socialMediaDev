@@ -50,16 +50,16 @@ postRouter.post("/addPost",async (req, res) => {
 
 //* Modify post*/
 postRouter.put('/modifyPost/:id', async (req, res) => {
-     try {
-        let result = await post.findByIdAndUpdate(
-            { _id: req.params.id },
-            { $set: { postContent: req.body.postContent } },
-            { new: true }
-          );
-          res.send({ modifiedPost: result, msg: "Your post modified successfully" });
-        } catch (error) {
-          console.log(error);
-        }
+   try {
+     let result = await post.findByIdAndUpdate(
+       { _id: req.params.id },
+       { $set: { ...req.body } },
+       { new: true }
+     );
+     res.send({ newPost: result, msg: "Post updated" });
+   } catch (error) {
+     console.log(error);
+   }
     });
 
 //* Delete post*/

@@ -18,7 +18,7 @@ export const updatePost = createAsyncThunk(
   async ({ post, id }) => {
     try {
       let result = await axios.put(
-        `http://localhost:5000/post/update/${id}`,
+        `http://localhost:5000/post/modifyPost/${id}`,
         post
       );
       return result.data;

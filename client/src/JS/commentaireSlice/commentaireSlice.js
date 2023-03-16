@@ -78,7 +78,7 @@ export const commentaireSlice = createSlice({
     [createCommentaire.fulfilled]: (state, action) => {
       state.status = "success";
       //console.log("=========",action.payload);
-      state.commentaire = [...state.commentaire, action.payload.commentaire];
+      state.commentaire = [action.payload.commentaire];
 
       return state;
     },

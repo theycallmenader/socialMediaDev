@@ -5,6 +5,7 @@ import '../styles/postDetails.css'
 import InputEmoji from "react-input-emoji";
 import { createCommentaire } from '../JS/commentaireSlice/commentaireSlice';
 import AddCommentaire from './AddCommentaire';
+import { updatePost } from '../JS/postSlice/postSlice';
 
 
 const PostDetails = ({el}) => {
@@ -15,7 +16,12 @@ const PostDetails = ({el}) => {
   const [redHeart, setRedHeart] = useState(false)
   const [commentaireContent, setCommentaireContent] = useState("");
   const [showaddBtn, setShowaddBtn] = useState(true);
+  const [newPost, setNewPost] = useState("");
   
+    // const handleUpdate = (e) =>
+    //   setNewPost({
+    //     ...newPost,
+    //   });
   const [activeBtn, setActiveBtn] = useState("none");
   const handleLikeClick = () => {
     if (activeBtn === "none") {
@@ -37,23 +43,39 @@ console.log(post,'pooost')
 
   return (
     <>
-    <div className='post-details'>
-        <img src="assets/posttest.jpg" alt="" className='postImage' />
+      <div className="post-details">
+        <img src="assets/posttest.jpg" alt="" className="postImage" />
         <div className="like-comment-share">
-          {!redHeart? <>
-            <img src='assets/default-heart.png' className='default-heart' alt='' onClick={()=>setRedHeart(!redHeart)}/>
-
-          </> : <>
-          <img src='assets/heart.png' className='default-heart' alt='' onClick={()=>setRedHeart(!redHeart)}/>
-
-          </>}
-        <i class="uil uil-comment-alt-dots"></i>
-        <i class="uil uil-share" style={{marginLeft:'25px'}}></i>
+          {!redHeart ? (
+            <>
+              <img
+                src="assets/default-heart.png"
+                className="default-heart"
+                alt=""
+                onClick={() => setRedHeart(!redHeart)}
+              />
+            </>
+          ) : (
+            <>
+              <img
+                src="assets/heart.png"
+                className="default-heart"
+                alt=""
+                onClick={() => setRedHeart(!redHeart)}
+              />
+            </>
+          )}
+          <i class="uil uil-comment-alt-dots"></i>
+          <i class="uil uil-share" style={{ marginLeft: "25px" }}></i>
         </div>
         <p>2000 like</p>
+        <p>{el?.postContent}</p>
+
         <div className="name-content">
-        <h3>{el?.firstname} {el?.lastname}</h3>
-        <InputEmoji
+          <h3>
+            {el?.firstname} {el?.lastname}
+          </h3>
+          <InputEmoji
             maxLength={100}
             height={10}
             onResize
@@ -65,38 +87,59 @@ console.log(post,'pooost')
             onEnter={handleOnEnter}
             placeholder="Type a message"
           />
-  
-  <button       onClick={() => {
-                      {
-                        {post.filter((el) => el.post_id).map((el) => 
-                          dispatch(
-                            createCommentaire({
-                              content: commentaireContent,
-                              user_id: user?._id,
-                              post_id: el?._id,
-                              firstname: user?.firstname,
-                              lastname: user?.lastname,
-                              user_img: user?.image,
-                              
-                              // repondre_id:
-                            }),
 
-                          )
-                          )}
-                       
-                       
-                        
-                         
-                      }
-                    }}>add</button>
-  
-            {/* // <AddCommentaire  el={el} /> */}
-          
-  
+          <input
+            name="commentaireContent"
+            type="text"
+            onChange={(e) =>setNewPost(e.target.value) }
+          />
+          <button
+            onClick={() => {
+              {
+                {
+                  post.map((el) =>
+                    // dispatch(
+                    //   createCommentaire({
+                    //     content: commentaireContent,
+                    //     user_id: user?._id,
+                    //     post_id: el?._id,
+                    //     firstname: user?.firstname,
+                    //     lastname: user?.lastname,
+                    //     user_img: user?.image,
+
+                    //     // repondre_id:
+                    //   }),
+
+                    // )
+                    dispatch(
+                      updatePost({
+                        ...post,
+                        id: el._id,
+                        avatar: "gg",
+                        post: {
+                          commentList: {
+                            firstname: user.firstname,
+                            lastname: user.lastname,
+                            postComments: newPost,
+                          },
+                          isLiked: true,
+                        },
+                        // commentList: [{ firstname: "hello" }],
+                      })
+                    )
+                  );
+                }
+              }
+            }}
+          >
+            add
+          </button>
+
+          {/* // <AddCommentaire  el={el} /> */}
         </div>
-        </div>
+      </div>
     </>
-  )
+  );
 }
 
 export default PostDetails
