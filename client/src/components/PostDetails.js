@@ -93,22 +93,10 @@ console.log(post,'pooost')
           <h3>
             {el?.firstname} {el?.lastname}
           </h3>
-          <InputEmoji
-            maxLength={100}
-            height={10}
-            onResize
-            // fontSize={50}
-            value={commentaireContent}
-            onClick={() => setShowaddBtn(true)}
-            onChange={setCommentaireContent}
-            cleanOnEnter
-            onEnter={handleOnEnter}
-            placeholder="Type a message"
-          />
-
           <input
             name="commentaireContent"
             type="text"
+            placeholder='Write something!'
             onChange={(e) =>setNewPost(e.target.value) }
           />
           <button
@@ -139,7 +127,7 @@ console.log(post,'pooost')
                             lastname: user.lastname,
                             postComments: newPost,
                           },
-                          isLiked: true,
+                          isLiked: false,
                         },
                         // commentList: [{ firstname: "hello" }],
                       })
