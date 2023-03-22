@@ -64,6 +64,8 @@ right: 58px;
 .info-update-icon .uil-pen{
     font-size: 20px;
     cursor: pointer;
+    border: none ;
+    background:none;
 }
 
 .profile-info .info-update-icon-pers{

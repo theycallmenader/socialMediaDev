@@ -137,7 +137,7 @@ console.log(post,'pooost')
               }
             }}
           >
-            add
+            Add
           </button>
 
           {/* // <AddCommentaire  el={el} /> */}

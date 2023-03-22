@@ -40,7 +40,7 @@ console.log(post,"hhhhh")
       <div className="header"></div>
       <Routes>
         {/* <Route exact path="/login" element={<Login/>} /> */}
-        <Route exact path="/loginregister" element={<LoginRegister/>} />
+        <Route exact path="/" element={<LoginRegister/>} />
         <Route element={<PrivateRoute/>}>
           <Route exact path="/homepage" element={<Homepage/>}></Route>
           <Route exact path="/profile" element={<Userprofile ping={ping} setPing={setPing}/>}></Route>
