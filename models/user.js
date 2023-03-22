@@ -22,6 +22,14 @@ const userSchema = new schema({
     type: String,
     required: true,
   },
+  status: {
+    type: String,
+    default:""
+  },
+  lives: {
+      type: String,
+    default:""
+  },
   //   date: {
   //     type: Date,
   //   },

@@ -10,9 +10,9 @@ const Userprofile = ({ping,setPing}) => {
   return (
     <>
       <div className="profile">
-        <LeftSide/>
-        <MiddleSide ping={ping} setPing={setPing}/>
-        <RightSide/>
+        <LeftSide ping={ping} setPing={setPing} />
+        <MiddleSide ping={ping} setPing={setPing} />
+        <RightSide />
       </div>
     </>
   );

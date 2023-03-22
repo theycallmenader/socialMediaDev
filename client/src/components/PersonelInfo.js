@@ -6,9 +6,19 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUser } from '../JS/userSlice/userSlice';
 
-const PersonelInfo = () => {
+const PersonelInfo = ({ping,setPing}) => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state?.user?.user);
 
+  const [newUser, setNewUser] = useState({});
+  const handleUpdate = (e) =>
+    setNewUser({
+      ...newUser,
+      [e.target.name]: e.target.value,
+    }); 
   const [open,setIsOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -22,70 +32,95 @@ const PersonelInfo = () => {
   return (
     <>
       <div className="profile-info">
-                                <div className="info-update-icon">
-                                    <h2>Your Info</h2> 
-                                    <button variant="outlined" onClick={handleClickOpen}>
-                                      <i className="uil uil-pen"></i>
-                                    </button>
-                                    <Dialog open={open} onClose={handleClose}>
-                                          <DialogTitle>Update your info</DialogTitle>
-                                          <DialogContent>
-                                            <DialogContentText>You can change your info here</DialogContentText>
-                                            <TextField
-                                              autoFocus
-                                              margin="dense"
-                                              id="firstName"
-                                              label="First Name"
-                                              type="string "
-                                              fullWidth
-                                              variant="standard"
-                                            />
-                                             <TextField
-                                              autoFocus
-                                              margin="dense"
-                                              id="Last Name"
-                                              label="Last Name"
-                                              type="string"
-                                              fullWidth
-                                              variant="standard"
-                                            />
-                                             <TextField
-                                              autoFocus
-                                              margin="dense"
-                                              id="status"
-                                              label="status"
-                                              type="string"
-                                              fullWidth
-                                              variant="standard"
-                                            />
-                                             <TextField
-                                              autoFocus
-                                              margin="dense"
-                                              id="lives"
-                                              label="lives"
-                                              type="string"
-                                              fullWidth
-                                              variant="standard"
-                                            />
-                                          </DialogContent>
-                                          <DialogActions>
-                                            <Button onClick={handleClose}>Cancel</Button>
-                                            <Button onClick={handleClose}>Modify</Button>
-                                          </DialogActions>
-                                    </Dialog>
-                                </div>
-                                <div className="info-update-icon-pers">
-                                    <h2>Status </h2> <h3>in RelationShip</h3> 
-                                </div>
-                                <div className="info-update-icon-pers">
-                                    <h2>Lives </h2> <h3>in Tounes</h3> 
-                                </div>
-                                <div className="info-update-icon-pers">
-                                    <h2>Works at </h2> <h3>in Tounes</h3> 
-                                </div>
-                              </div>
+        <div className="info-update-icon">
+          <h2>Your Info</h2>
+          <button variant="outlined" onClick={handleClickOpen}>
+            <i className="uil uil-pen"></i>
+          </button>
+
+          <Dialog open={open} onClose={handleClose}>
+            <DialogTitle>Update your info</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                You can change your info here
+              </DialogContentText>
+
+              <TextField
+                autoFocus
+                margin="dense"
+                id="firstName"
+                name="firstname"
+                label="First Name"
+                type="string "
+                fullWidth
+                variant="standard"
+                onChange={(e) => handleUpdate(e)}
+              />
+              <TextField
+                autoFocus
+                margin="dense"
+                id="Last Name"
+                name="lastname"
+                label="Last Name"
+                type="string"
+                fullWidth
+                variant="standard"
+                onChange={(e) => handleUpdate(e)}
+              />
+              <TextField
+                autoFocus
+                margin="dense"
+                id="status"
+                label="status"
+                name="status"
+                type="string"
+                fullWidth
+                variant="standard"
+                onChange={(e) => handleUpdate(e)}
+              />
+              <TextField
+                autoFocus
+                margin="dense"
+                id="lives"
+                label="lives"
+                name="lives"
+                type="string"
+                fullWidth
+                variant="standard"
+                onChange={(e) => handleUpdate(e)}
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>Cancel</Button>
+              <Button
+                onClick={() => {
+                  setTimeout(() => {
+                               dispatch(
+                                 updateUser({ id: user?._id, user: newUser })
+                               );
+
+                               setPing(!ping);
+                  }, 1000);
+      { handleClose()};
+                }}
+              >
+                Modify
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
+        <div className="info-update-icon-pers">
+          <h2>Status </h2> <h3>{user?.status}</h3>
+        </div>
+        <div className="info-update-icon-pers">
+          <h2>Lives </h2> <h3>{user?.lives}</h3>
+        </div>
+        <div className="info-update-icon-pers">
+          <h2>Works at </h2> <h3>in Tounes</h3>
+        </div>
+      </div>
     </>
-  )
+  );
 }
 
 export default PersonelInfo

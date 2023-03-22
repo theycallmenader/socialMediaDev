@@ -90,6 +90,7 @@ export const deleteUser = createAsyncThunk("user/delete", async ({ id }) => {
   }
 });
 
+
 const initialState = {
   user: null,
   status: null,
