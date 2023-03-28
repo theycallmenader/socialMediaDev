@@ -7,7 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUser } from '../JS/userSlice/userSlice';
+import { updateUser,deleteUser } from '../JS/userSlice/userSlice';
 
 const PersonelInfo = ({ping,setPing}) => {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const PersonelInfo = ({ping,setPing}) => {
   const handleClose = () => {
     setIsOpen(false);
   };
-
+  {user?.map((el, i)=>{
   return (
     <>
       <div className="profile-info">
@@ -36,8 +36,21 @@ const PersonelInfo = ({ping,setPing}) => {
           <h2>Your Info</h2>
           <button variant="outlined" onClick={handleClickOpen}>
             <i className="uil uil-pen"></i>
+            
           </button>
-
+          <button variant="outlined"
+          onClick={() => {
+            dispatch(
+              deleteUser({
+                id: el._id,
+                deleteUser,
+              })
+            );
+            setPing(!ping);
+          }}
+           >
+            <i className="uil uil-trash"></i>
+          </button>
           <Dialog open={open} onClose={handleClose}>
             <DialogTitle>Update your info</DialogTitle>
             <DialogContent>
@@ -90,6 +103,7 @@ const PersonelInfo = ({ping,setPing}) => {
                 onChange={(e) => handleUpdate(e)}
               />
             </DialogContent>
+            
             <DialogActions>
               <Button onClick={handleClose}>Cancel</Button>
               <Button
@@ -106,8 +120,12 @@ const PersonelInfo = ({ping,setPing}) => {
               >
                 Modify
               </Button>
+              
             </DialogActions>
+            
           </Dialog>
+        
+        
         </div>
         <div className="info-update-icon-pers">
           <h2>Status </h2> <h3>{user?.status}</h3>
@@ -121,6 +139,7 @@ const PersonelInfo = ({ping,setPing}) => {
       </div>
     </>
   );
+  })}            
 }
 
 export default PersonelInfo
