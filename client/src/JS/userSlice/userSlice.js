@@ -57,12 +57,12 @@ export const updateUser = createAsyncThunk(
 
 //get all users
 
-export const getUser = createAsyncThunk("user/getall", async () => {
+//get users
+export const getUsers = createAsyncThunk("/user/all", async () => {
   try {
     let result = await axios.get(`http://localhost:5000/user/all`);
-    console.log(result.data.users);
+    console.log(result.data.user, "users get");
     return result.data.users;
-    // console.log(result.data.data.users)
   } catch (error) {
     console.log(error);
   }
@@ -94,6 +94,7 @@ export const deleteUser = createAsyncThunk("user/delete", async ({ id }) => {
 const initialState = {
   user: null,
   status: null,
+  users: null,
 };
 export const userSlice = createSlice({
   name: "user",
@@ -159,15 +160,15 @@ export const userSlice = createSlice({
       state.status = "rejected";
     },
     /////////////get all user////////////////////////
-    [getUser.pending]: (state) => {
+    //get users
+    [getUsers.pending]: (state) => {
       state.status = "loading";
     },
-    [getUser.fulfilled]: (state, action) => {
-      state.status = "fulfilled";
-      // state.msg = action.payload.data.msg;
+    [getUsers.fulfilled]: (state, action) => {
+      state.status = "fullfieled";
       state.users = action.payload;
     },
-    [getUser.rejected]: (state) => {
+    [getUsers.rejected]: (state) => {
       state.status = "failed";
     },
 

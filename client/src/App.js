@@ -7,7 +7,7 @@ import LoginRegister from './pages/LoginRegister';
 import Userprofile from './pages/Userprofile';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { getUser, userCurrent } from './JS/userSlice/userSlice';
+import {  getUsers, userCurrent } from './JS/userSlice/userSlice';
 import { getPost } from './JS/postSlice/postSlice';
 import Homepage from './components/Homepage';
 import PrivateRoute from './route/PrivateRoute';
@@ -18,6 +18,8 @@ import PrivateRoute from './route/PrivateRoute';
 
 function App() {
   const user = useSelector((state) => state?.user?.user);
+    const users = useSelector((state) => state.users?.users);
+    console.log(users, "hellooo");
   const post = useSelector((state) => state?.post?.post);
 console.log(post,"hhhhh")
   const isAuth = localStorage.getItem("token");
@@ -27,7 +29,7 @@ console.log(post,"hhhhh")
     useEffect(() => {
       if (isAuth) {
   dispatch(userCurrent());
-  dispatch(getUser());
+    dispatch(getUsers());
 
       }
       

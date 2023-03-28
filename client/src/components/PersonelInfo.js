@@ -8,11 +8,16 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser,deleteUser } from '../JS/userSlice/userSlice';
+import { useNavigate } from "react-router";
 
-const PersonelInfo = ({ping,setPing}) => {
+const PersonelInfo = ({ ping, setPing }) => {
+    const navigate = useNavigate();
+  
   const dispatch = useDispatch();
   const user = useSelector((state) => state?.user?.user);
-
+  console.log(user?._id,'idd')
+  const users = useSelector((state) => state?.user?.users);
+  console.log(users,"uuu")
   const [newUser, setNewUser] = useState({});
   const handleUpdate = (e) =>
     setNewUser({
@@ -28,7 +33,6 @@ const PersonelInfo = ({ping,setPing}) => {
   const handleClose = () => {
     setIsOpen(false);
   };
-  {user?.map((el, i)=>{
   return (
     <>
       <div className="profile-info">
@@ -36,20 +40,31 @@ const PersonelInfo = ({ping,setPing}) => {
           <h2>Your Info</h2>
           <button variant="outlined" onClick={handleClickOpen}>
             <i className="uil uil-pen"></i>
-            
           </button>
-          <button variant="outlined"
-          onClick={() => {
-            dispatch(
-              deleteUser({
-                id: el._id,
-                deleteUser,
-              })
-            );
-            setPing(!ping);
-          }}
-           >
-            <i className="uil uil-trash"></i>
+          <button variant="outlined">
+            <i
+              className="uil uil-trash"
+              onClick={() => {
+                  {
+                  users?.map((el) => {
+                     dispatch(
+                       deleteUser({
+                         id: user._id,
+                         deleteUser,
+                         // feedbacks: feedback.filter((el) => el == user._id),
+                       })
+                     );
+                     setPing(!ping);
+                    setTimeout(() => {
+                      navigate('/')
+                    }, 1500);
+                    
+                  });
+                  }
+
+               
+              }}
+            ></i>
           </button>
           <Dialog open={open} onClose={handleClose}>
             <DialogTitle>Update your info</DialogTitle>
@@ -103,29 +118,25 @@ const PersonelInfo = ({ping,setPing}) => {
                 onChange={(e) => handleUpdate(e)}
               />
             </DialogContent>
-            
+
             <DialogActions>
               <Button onClick={handleClose}>Cancel</Button>
               <Button
                 onClick={() => {
                   setTimeout(() => {
-                               dispatch(
-                                 updateUser({ id: user?._id, user: newUser })
-                               );
+                    dispatch(updateUser({ id: user?._id, user: newUser }));
 
-                               setPing(!ping);
+                    setPing(!ping);
                   }, 1000);
-      { handleClose()};
+                  {
+                    handleClose();
+                  }
                 }}
               >
                 Modify
               </Button>
-              
             </DialogActions>
-            
           </Dialog>
-        
-        
         </div>
         <div className="info-update-icon-pers">
           <h2>Status </h2> <h3>{user?.status}</h3>
@@ -139,7 +150,6 @@ const PersonelInfo = ({ping,setPing}) => {
       </div>
     </>
   );
-  })}            
-}
+  }
 
 export default PersonelInfo
